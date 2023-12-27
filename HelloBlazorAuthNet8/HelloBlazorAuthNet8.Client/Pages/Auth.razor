@@ -1,0 +1,28 @@
+﻿@page "/auth"
+
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize(Roles = "Admin")]
+@rendermode InteractiveAuto
+
+<PageTitle>Auth</PageTitle>
+
+<h1>You are authenticated</h1>
+
+<AuthorizeView>
+    Hello @context.User.Identity?.Name!
+</AuthorizeView>
+
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <p>You are authorized</p>
+        @foreach (var claim in context.User.Claims)
+        {
+            <p>@claim.Type: @claim.Value</p>
+        }   
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized</p>
+    </NotAuthorized>
+</AuthorizeView>
+
